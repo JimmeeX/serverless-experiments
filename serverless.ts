@@ -8,26 +8,27 @@ const serverlessConfiguration: Serverless = {
   org: 'jimmeex',
   frameworkVersion: '2',
   custom: {
+    tableName: "cool-places",
     webpack: {
       webpackConfig: './webpack.config.js',
       includeModules: true
     },
-    localstack: {
-      stages: ['local', 'dev'],
-      host: 'http://localhost',
-      edgePort: 4566,
-      autostart: true,
-      lambda: {
-        mountCode: true
-      },
-      docker: {
-        sudo: false
-      },
-      debug: true
-    }
+    // localstack: {
+    //   stages: ['local'],
+    //   host: 'http://localhost',
+    //   edgePort: 4566,
+    //   autostart: true,
+    //   lambda: {
+    //     mountCode: true
+    //   },
+    //   docker: {
+    //     sudo: false
+    //   },
+    //   debug: true
+    // }
   },
   // Add the serverless-webpack plugin
-  plugins: ['serverless-webpack'],
+  plugins: ['serverless-offline', 'serverless-webpack'], // omitting serverless-localstack
   provider: {
     name: 'aws',
     runtime: 'nodejs12.x',
@@ -40,7 +41,7 @@ const serverlessConfiguration: Serverless = {
     region: 'ap-southeast-2'
   },
   functions: {
-    hello: {
+    create: {
       handler: 'handler.hello',
       events: [
         {
@@ -50,6 +51,25 @@ const serverlessConfiguration: Serverless = {
           }
         }
       ]
+    }
+  },
+  resources: {
+    Resources: {
+      kittensTable: {
+        Type: 'AWS::DynamoDB::Table',
+        Properties: {
+          TableName: '${self:service}:${self:custom.tableName}-${opt:stage}',
+          AttributeDefinitions: {
+            AttributeName: 'ID',
+            AttributeType: 'S'
+          },
+          KeySchema: {
+            AttributeName: 'ID',
+            KeyType: 'HASH'
+          },
+          BillingMode: 'PAY_PER_REQUEST'
+        }
+      }
     }
   }
 }

@@ -2,15 +2,17 @@ version: '2.1'
 
 services:
   localstack:
-    image: localstack/localstack
+    image: localstack/localstack-full
     ports:
       - "4566:4566"
       - "4571:4571"
       - "${PORT_WEB_UI-8080}:${PORT_WEB_UI-8080}"
     environment:
-      - SERVICES=s3,lambda,dynamodb,cloudformation
-      - DEBUG=1
-      - DATA_DIR=/tmp/localstack/data
+      # - SERVICES=s3,lambda,dynamodb,cloudformation,sts
+      # - DEBUG=1
+      # - DATA_DIR=/tmp/localstack/data
+      - LAMBDA_REMOTE_DOCKER=false
+      - DEFAULT_REGION=ap-southeast-2
       - DOCKER_HOST=unix:///var/run/docker.sock
     volumes:
       - "${TMPDIR:-/tmp/localstack}:/tmp/localstack"
