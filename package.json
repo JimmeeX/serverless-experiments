@@ -7,6 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "serverless-dynamodb-local": "^0.2.30",
     "source-map-support": "^0.5.19"
   },
   "devDependencies": {
@@ -14,6 +15,7 @@
     "@types/aws-lambda": "^8.10.64",
     "@types/node": "^14.14.7",
     "@types/serverless": "^1.78.9",
+    "aws-sdk": "^2.792.0",
     "eslint": "^7.13.0",
     "eslint-config-airbnb-typescript": "^12.0.0",
     "eslint-config-prettier": "^6.15.0",

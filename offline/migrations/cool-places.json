@@ -1,0 +1,21 @@
+{
+  "Table": {
+    "TableName": "cool-places-table",
+    "AttributeDefinitions": [
+      {
+        "AttributeName": "ID",
+        "AttributeType": "S"
+      }
+    ],
+    "KeySchema": [
+      {
+        "AttributeName": "ID",
+        "KeyType": "HASH"
+      }
+    ],
+    "ProvisionedThroughput": {
+      "ReadCapacityUnits": 1,
+      "WriteCapacityUnits": 1
+    }
+  }
+}
