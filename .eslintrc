@@ -1,0 +1,20 @@
+{
+  "root": true,
+  "parserOptions": {
+    "project": "./tsconfig.json",
+    "sourceType": "module"
+  },
+  "extends": ["@serverless/eslint-config/node", "airbnb-typescript"],
+  "ignorePatterns": "webpack.config.js",
+  "rules": {
+    "no-template-curly-in-string": "off",
+    "arrow-body-style": "off",
+    // "@typescript-eslint/comma-dangle": "off",
+    "@typescript-eslint/no-unused-vars": "off"
+  },
+  "settings": {
+    "jest": {
+      "version": 26
+    }
+  }
+}

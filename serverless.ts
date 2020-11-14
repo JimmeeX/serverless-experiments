@@ -8,10 +8,10 @@ const serverlessConfiguration: Serverless = {
   org: 'jimmeex',
   frameworkVersion: '2',
   custom: {
-    tableName: "cool-places",
+    tableName: 'cool-places',
     webpack: {
       webpackConfig: './webpack.config.js',
-      includeModules: true
+      includeModules: true,
     },
     // localstack: {
     //   stages: ['local'],
@@ -38,20 +38,20 @@ const serverlessConfiguration: Serverless = {
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
     },
-    region: 'ap-southeast-2'
+    region: 'ap-southeast-2',
   },
   functions: {
     create: {
-      handler: 'handler.hello',
+      handler: 'lambdas/endpoints/sendHello.handler',
       events: [
         {
           http: {
+            path: 'send-hello',
             method: 'get',
-            path: 'hello',
-          }
-        }
-      ]
-    }
+          },
+        },
+      ],
+    },
   },
   resources: {
     Resources: {
@@ -61,17 +61,17 @@ const serverlessConfiguration: Serverless = {
           TableName: '${self:service}:${self:custom.tableName}-${opt:stage}',
           AttributeDefinitions: {
             AttributeName: 'ID',
-            AttributeType: 'S'
+            AttributeType: 'S',
           },
           KeySchema: {
             AttributeName: 'ID',
-            KeyType: 'HASH'
+            KeyType: 'HASH',
           },
-          BillingMode: 'PAY_PER_REQUEST'
-        }
-      }
-    }
-  }
-}
+          BillingMode: 'PAY_PER_REQUEST',
+        },
+      },
+    },
+  },
+};
 
 module.exports = serverlessConfiguration;

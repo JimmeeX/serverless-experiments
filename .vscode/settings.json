@@ -1,0 +1,36 @@
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode", // Prettier VSCode Plugin
+  // "[javascript]": {
+  //   "editor.defaultFormatter": "esbenp.prettier-vscode"
+  // },
+  // "[javascriptreact]": {
+  //   "editor.defaultFormatter": "esbenp.prettier-vscode"
+  // },
+  // "[typescript]": {
+  //   "editor.defaultFormatter": "esbenp.prettier-vscode"
+  // },
+  // "[typescriptreact]": {
+  //   "editor.defaultFormatter": "esbenp.prettier-vscode"
+  // },
+  "editor.formatOnSave": true,
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+  // "eslint.workingDirectories": ["./frontend"],
+  // "python.pythonPath": "${workspaceFolder}/backend/venv/bin/python",
+  // "python.autoComplete.extraPaths": ["${workspaceFolder}/backend/**"],
+  // "python.linting.enabled": true,
+  // "python.linting.pylintEnabled": true,
+  // "python.linting.pylintPath": "${workspaceFolder}/backend/venv/bin/pylint",
+  // "python.linting.flake8Enabled": true,
+  // "python.linting.flake8Path": "${workspaceFolder}/backend/venv/bin/flake8",
+  // "python.linting.flake8Args": ["--max-line-length=120"],
+  // "python.formatting.provider": "black",
+  // "python.formatting.blackPath": "${workspaceFolder}/backend/venv/bin/black",
+  // "python.analysis.extraPaths": [
+  //   "${workspaceFolder}/backend/**"
+  // ]
+}
