@@ -1,7 +1,6 @@
-import { APIGatewayProxyHandler } from 'aws-lambda';
-import 'source-map-support/register';
+import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 
-const handler: APIGatewayProxyHandler = async (event, _context) => {
+export async function handler(event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
   return {
     statusCode: 200,
     body: JSON.stringify(
@@ -13,6 +12,4 @@ const handler: APIGatewayProxyHandler = async (event, _context) => {
       2,
     ),
   };
-};
-
-export default handler;
+}
