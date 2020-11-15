@@ -1,0 +1,91 @@
+service:
+  name: 'serverless-test'
+
+app: 'typescript-lambda-dynamodb-app'
+org: 'jimmeex'
+
+frameworkVersion: '2'
+
+plugins:
+  - serverless-webpack
+  - serverless-offline
+  - serverless-dynamodb-local
+
+custom:
+  tableName: 'cool-places-table'
+  webpack:
+    webpackConfig: './webpack.config.js'
+    includeModules: true
+  serverless-offline:
+    httpPort: 5000
+  dynamodb:
+    stages:
+      - dev
+    start:
+      port: '${env:DYNAMODB_PORT, 8000}'
+      host: '${env:DYNAMODB_HOST, localhost}'
+      noStart: '${env:DYNAMODB_NO_START, false}'
+      migrate: true
+    # migration:
+    # dir: 'offline/migrations' # Location of description of dynamodb
+
+provider:
+  name: 'aws'
+  runtime: 'nodejs12.x'
+  region: "${opt:region, 'ap-southeast-2'}"
+  stage: "${opt:stage, 'dev'}"
+
+functions:
+  hello:
+    handler: 'lambdas/endpoints/sendHello.handler'
+    events:
+      - http:
+          path: 'send-hello'
+          method: 'get'
+  create:
+    handler: 'lambdas/endpoints/createPlace.handler'
+    events:
+      - http:
+          path: 'create-place/{ID}'
+          method: 'post'
+
+resources:
+  Resources:
+    CoolPlaces:
+      Type: 'AWS::DynamoDB::Table'
+      Properties:
+        TableName: 'cool-places' # TableName: '${self:service}:${self:custom.tableName}-${self:provider.stage}'
+        AttributeDefinitions:
+          - AttributeName: 'ID'
+            AttributeType: 'S'
+        KeySchema:
+          - AttributeName: 'ID'
+            KeyType: 'HASH'
+        BillingMode: 'PAY_PER_REQUEST'
+    ItemsTable:
+      Type: 'AWS::DynamoDB::Table'
+      Properties:
+        TableName: 'items'
+        AttributeDefinitions:
+          - AttributeName: 'id'
+            AttributeType: 'S'
+          - AttributeName: 'userId'
+            AttributeType: 'S'
+        KeySchema:
+          - AttributeName: 'id'
+            KeyType: 'HASH'
+          - AttributeName: 'userId'
+            KeyType: 'RANGE'
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        GlobalSecondaryIndexes:
+          - IndexName: 'userId-index'
+            KeySchema:
+              - AttributeName: 'userId'
+                KeyType: 'HASH'
+            Projection:
+              ProjectionType: 'ALL'
+            ProvisionedThroughput:
+              ReadCapacityUnits: 1
+              WriteCapacityUnits: 1

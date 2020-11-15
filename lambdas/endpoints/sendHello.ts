@@ -1,5 +1,7 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 
+import 'source-map-support/register';
+
 export async function handler(event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
   return {
     statusCode: 200,

@@ -10,4 +10,5 @@ jspm_packages
 # Webpack directories
 .webpack
 
-test.http
+**/.env*
+**/test.http

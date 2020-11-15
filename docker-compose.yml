@@ -1,19 +1,29 @@
-version: '2.1'
+version: '3.7'
 
 services:
-  localstack:
-    image: localstack/localstack-full
+  dynamodb:
+    image: 'amazon/dynamodb-local'
     ports:
-      - "4566:4566"
-      - "4571:4571"
-      - "${PORT_WEB_UI-8080}:${PORT_WEB_UI-8080}"
-    environment:
-      # - SERVICES=s3,lambda,dynamodb,cloudformation,sts
-      # - DEBUG=1
-      # - DATA_DIR=/tmp/localstack/data
-      - LAMBDA_REMOTE_DOCKER=false
-      - DEFAULT_REGION=ap-southeast-2
-      - DOCKER_HOST=unix:///var/run/docker.sock
+      - 8000:8000
+    expose:
+      - 8000
+    command: ['-jar', 'DynamoDBLocal.jar', '-sharedDb']
+
+  api:
+    build: .
+    depends_on:
+      - dynamodb
+    links:
+      - dynamodb
+    ports:
+      - 5000:5000 # Expose Lambda HTTP Port
     volumes:
-      - "${TMPDIR:-/tmp/localstack}:/tmp/localstack"
-      - "/var/run/docker.sock:/var/run/docker.sock"
+      - .:/app # Live Reload
+      - /app/node_modules # Prevents node_modules being overwritten by host directory
+    environment:
+      DYNAMODB_HOST: dynamodb
+      DYNAMODB_PORT: 8000
+      DYNAMODB_NO_START: 'true'
+    env_file: .env.dev # SERVERLESS_ACCESS_KEY
+    command: ['serverless', 'offline', '--host', '0.0.0.0'] # Add host to prevent socket hang up
+    tty: true # Colorised Terminal Output
