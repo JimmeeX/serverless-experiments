@@ -27,9 +27,23 @@ Learning about [serverless](https://www.serverless.com/) :)
 - Debugging Configuration w/ Docker
 - [Object object] environmental variable issues
 - Auth w/ cognito or aws-amplify?
-- Docker - Persist Dynamodb Data
 - CI/CD
 - Jest Integration
+
+## Development
+
+1. Run Docker.
+
+   ```bash
+   docker-compose up --build
+   ```
+
+2. If changes are made to Dynamodb, make the migrations (in a separate terminal while docker-compose up is running).
+
+   ```bash
+   docker exec -it serverless-test_api_1 /bin/sh
+   sls dynamodb migrate
+   ```
 
 ## Learning Resources
 

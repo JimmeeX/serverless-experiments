@@ -5,18 +5,18 @@ services:
     image: 'amazon/dynamodb-local'
     ports:
       - 8000:8000
-    expose:
-      - 8000
     command: ['-jar', 'DynamoDBLocal.jar', '-sharedDb']
+    tty: true # Colorised Terminal Output
 
   api:
-    build: .
+    build:
+      context: .
+      target: debug
     depends_on:
-      - dynamodb
-    links:
       - dynamodb
     ports:
       - 5000:5000 # Expose Lambda HTTP Port
+      - 9229:9229 # Nodejs Debug Port
     volumes:
       - .:/app # Live Reload
       - /app/node_modules # Prevents node_modules being overwritten by host directory
@@ -24,6 +24,6 @@ services:
       DYNAMODB_HOST: dynamodb
       DYNAMODB_PORT: 8000
       DYNAMODB_NO_START: 'true'
-    env_file: .env.dev # SERVERLESS_ACCESS_KEY
-    command: ['serverless', 'offline', '--host', '0.0.0.0'] # Add host to prevent socket hang up
+    env_file: .env # SERVERLESS_ACCESS_KEY
+    command: 'node --inspect=0.0.0.0:9229 /usr/local/bin/serverless offline start --host 0.0.0.0' # Add host to prevent socket hang up
     tty: true # Colorised Terminal Output
