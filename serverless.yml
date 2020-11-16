@@ -36,13 +36,13 @@ provider:
 
 functions:
   hello:
-    handler: 'lambdas/endpoints/sendHello.handler'
+    handler: 'src/lambdas/endpoints/sendHello.handler'
     events:
       - http:
           path: 'send-hello'
           method: 'get'
   create:
-    handler: 'lambdas/endpoints/createPlace.handler'
+    handler: 'src/lambdas/endpoints/createPlace.handler'
     events:
       - http:
           path: 'create-place/{id}'

@@ -5,11 +5,8 @@
       "name": "Docker: Attach to Lambda",
       "type": "node",
       "request": "attach",
-      // "protocol": "inspector",
-      "port": 9229,
-      // "outFiles": ["${workspaceRoot}/.webpack/**/*.js"],
-      // "sourceMaps": true,
-      // "restart": true,
+      "protocol": "inspector",
+      "port": 5858,
       "localRoot": "${workspaceRoot}",
       "remoteRoot": "/app"
     },
@@ -22,9 +19,6 @@
       "args": ["offline", "start"],
       "runtimeExecutable": "node",
       "runtimeArgs": ["--inspect"],
-      // "port": 9229,
-      // "outFiles": ["${workspaceRoot}/.webpack/**/*.js"],
-      // "sourceMaps": true
       "console": "integratedTerminal"
     }
   ]

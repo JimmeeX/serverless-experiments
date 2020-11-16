@@ -7,7 +7,7 @@ module.exports = {
   context: __dirname,
   mode: slsw.lib.webpack.isLocal ? 'development' : 'production',
   entry: slsw.lib.entries,
-  devtool: slsw.lib.webpack.isLocal ? 'eval-cheap-module-source-map' : 'source-map',
+  devtool: 'source-map',
   resolve: {
     extensions: ['.ts', '.js', '.tsx', '.jsx'],
     symlinks: false,
@@ -33,10 +33,6 @@ module.exports = {
             path.resolve(__dirname, '.webpack'),
           ],
         ],
-        options: {
-          transpileOnly: true,
-          experimentalWatchApi: true,
-        },
       },
     ],
   },
