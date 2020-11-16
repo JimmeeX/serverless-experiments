@@ -32,7 +32,7 @@ const documentClient = new DocumentClient(options);
 const params: DocumentClient.PutItemInput = {
   TableName: 'cool-places',
   Item: {
-    ID: 'HELLO_WORLD',
+    ID: 'BYE',
   },
 };
 
@@ -41,10 +41,8 @@ export async function handler(event: APIGatewayProxyEvent): Promise<APIGatewayPr
   // console.log(context);
 
   // console.log('TABLENAME', process.env.tableName);
-
-  console.log(process.env);
-  console.log(params);
-  console.log(options);
+  // const { id } = event.pathParameters;
+  console.log(event.body);
 
   const res = await documentClient.put(params).promise();
 

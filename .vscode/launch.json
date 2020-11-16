@@ -2,13 +2,30 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Debug Lambda Node",
+      "name": "Docker: Attach to Lambda",
+      "type": "node",
+      "request": "attach",
+      // "protocol": "inspector",
+      "port": 9229,
+      // "outFiles": ["${workspaceRoot}/.webpack/**/*.js"],
+      // "sourceMaps": true,
+      // "restart": true,
+      "localRoot": "${workspaceRoot}",
+      "remoteRoot": "/app"
+    },
+    {
+      "name": "Debug Lambda Local",
       "type": "node",
       "request": "launch",
       "cwd": "${workspaceRoot}",
-      "runtimeExecutable": "sls",
-      "runtimeArgs": ["offline", "start"],
-      "port": 9229
+      "program": "./node_modules/.bin/serverless",
+      "args": ["offline", "start"],
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["--inspect"],
+      // "port": 9229,
+      // "outFiles": ["${workspaceRoot}/.webpack/**/*.js"],
+      // "sourceMaps": true
+      "console": "integratedTerminal"
     }
   ]
 }

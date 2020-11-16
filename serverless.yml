@@ -17,6 +17,7 @@ custom:
     webpackConfig: './webpack.config.js'
     includeModules: true
   serverless-offline:
+    host: '0.0.0.0'
     httpPort: 5000
   dynamodb:
     stages:
@@ -30,7 +31,7 @@ custom:
 provider:
   name: 'aws'
   runtime: 'nodejs12.x'
-  region: "${opt:region, 'ap-southeast-2'}"
+  region: "${env:AWS_REGION, 'ap-southeast-2'}"
   stage: "${opt:stage, 'dev'}"
 
 functions:
@@ -44,7 +45,7 @@ functions:
     handler: 'lambdas/endpoints/createPlace.handler'
     events:
       - http:
-          path: 'create-place/{ID}'
+          path: 'create-place/{id}'
           method: 'post'
 
 resources:

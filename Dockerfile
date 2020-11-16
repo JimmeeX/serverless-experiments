@@ -1,11 +1,8 @@
-FROM node:12.19.0-alpine as debug
+FROM node:12.19.0-alpine AS debug
 
 # Setup Working Directory && Add node_modules to path
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
-
-# Install Serverless Framework
-RUN npm install -g serverless --silent
 
 # Install Package Dependencies
 COPY package.json package-lock.json serverless.yml ./
