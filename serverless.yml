@@ -26,8 +26,6 @@ custom:
       host: '${env:DYNAMODB_HOST, localhost}'
       noStart: '${env:DYNAMODB_NO_START, false}'
       migrate: true
-    # migration:
-    # dir: 'offline/migrations' # Location of description of dynamodb
 
 provider:
   name: 'aws'
@@ -62,30 +60,3 @@ resources:
           - AttributeName: 'ID'
             KeyType: 'HASH'
         BillingMode: 'PAY_PER_REQUEST'
-    ItemsTable:
-      Type: 'AWS::DynamoDB::Table'
-      Properties:
-        TableName: 'items'
-        AttributeDefinitions:
-          - AttributeName: 'id'
-            AttributeType: 'S'
-          - AttributeName: 'userId'
-            AttributeType: 'S'
-        KeySchema:
-          - AttributeName: 'id'
-            KeyType: 'HASH'
-          - AttributeName: 'userId'
-            KeyType: 'RANGE'
-        ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
-        GlobalSecondaryIndexes:
-          - IndexName: 'userId-index'
-            KeySchema:
-              - AttributeName: 'userId'
-                KeyType: 'HASH'
-            Projection:
-              ProjectionType: 'ALL'
-            ProvisionedThroughput:
-              ReadCapacityUnits: 1
-              WriteCapacityUnits: 1
