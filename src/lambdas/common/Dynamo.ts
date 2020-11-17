@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import moment from 'moment';
+import * as moment from 'moment';
 import { DocumentClient } from 'aws-sdk/clients/dynamodb';
 import { ServiceConfigurationOptions } from 'aws-sdk/lib/service';
 
@@ -31,6 +31,8 @@ if (process.env.JEST_WORKER_ID) {
 const db = new DocumentClient(options);
 
 export const createItem = async (name: string): Promise<Item> => {
+  if (!name) throw Error('There was no name in body');
+
   const item: Item = {
     id: uuidv4(),
     name,

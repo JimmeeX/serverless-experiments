@@ -12,7 +12,6 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
     const item = await createItem(name);
     return new Response({ statusCode: 200, body: item });
   } catch (err) {
-    console.log(err);
     return new Response({
       statusCode: 400,
       body: { message: err.message },

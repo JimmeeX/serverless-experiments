@@ -11,4 +11,3 @@ jspm_packages
 .webpack
 
 **/.env*
-**/test.http
