@@ -16,7 +16,9 @@ Learning about [serverless](https://www.serverless.com/) :)
 ## Features
 
 - Local development using [serverless-offline](https://github.com/dherault/serverless-offline) and [serverless-dynamodb-local](https://github.com/99x/serverless-dynamodb-local).
-- A failed attempt at [localstack](https://github.com/localstack/localstack) integration
+- Local and Remote (Docker) debugging for lambda functions using node --inspect.
+- Testing using [jest](https://jestjs.io/)
+- CI with Github Actions (for linting and jest testing)
 
 ## Reqs
 
@@ -24,11 +26,9 @@ Learning about [serverless](https://www.serverless.com/) :)
 
 ## TODOs
 
-- Debugging Configuration w/ Docker
-- [Object object] environmental variable issues
 - Auth w/ cognito or aws-amplify?
-- CI/CD
-- Jest Integration
+- Custom API Gateway Domain?
+- IAM
 
 ## Development
 
@@ -44,6 +44,28 @@ Learning about [serverless](https://www.serverless.com/) :)
    docker exec -it serverless-test_api_1 /bin/sh
    sls dynamodb migrate
    ```
+
+   If the tables are not updated upon changing `serverless.yml`, you may have to delete the tables themselves by running
+
+   ```bash
+   aws dynamodb --endpoint-url http://localhost:8000 delete-table --table-name <dynamodb-table-name>
+   ```
+
+## Debugging
+
+### Via Docker
+
+While Docker is running, launch VSCode's `Docker: Attach to Lambda` configuration.
+
+### Locally
+
+Launch VSCode's `Debug Lambda Local` configuration
+
+### While Jest Testing
+
+Launch VSCode's `Debug Jest Tests` configuration
+
+## Testing
 
 ## Learning Resources
 

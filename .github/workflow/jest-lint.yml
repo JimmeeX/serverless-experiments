@@ -1,0 +1,33 @@
+name: Jest ESLint TSLint CI
+
+on:
+  push:
+    branches:
+      - master
+
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install NPM Modules
+        working-directory: ./frontend
+        run: npm install
+
+      - name: Run ESLint
+        working-directory: ./frontend
+        run: ./node_modules/.bin/eslint --ext .js,.jsx,.ts,.tsx src
+
+      - name: Run TSLint
+        working-directory: ./frontend
+        run: ./node_modules/.bin/tsc --noEmit
+
+      - name: Run Jest Tests
+        working-directory: ./frontend
+        run: npm test

@@ -25,6 +25,5 @@ services:
       DYNAMODB_PORT: 8000
       DYNAMODB_NO_START: 'true'
     env_file: .env # SERVERLESS_ACCESS_KEY
-    # command: 'node --inspect=0.0.0.0:5858 ./node_modules/.bin/serverless offline start'
     command: 'node --inspect=0.0.0.0:5858 --nolazy node_modules/.bin/serverless offline --webpack-use-polling'
     tty: true # Colorised Terminal Output
