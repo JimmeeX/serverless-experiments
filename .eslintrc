@@ -4,7 +4,7 @@
     "project": "./tsconfig.json",
     "sourceType": "module"
   },
-  "extends": ["@serverless/eslint-config/node", "airbnb-typescript"],
+  "extends": ["@serverless/eslint-config/node", "airbnb-typescript/base"],
   "ignorePatterns": "webpack.config.js",
   "rules": {
     "no-template-curly-in-string": "off",
