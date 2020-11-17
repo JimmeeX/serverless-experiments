@@ -67,6 +67,8 @@ Launch VSCode's `Debug Jest Tests` configuration
 
 ## Testing
 
+Simply run `npm test`, or use VSCode's `Debug Jest Tests` debug configuration.
+
 ## Learning Resources
 
 - [The Serverless Framework with AWS Playlist](https://www.youtube.com/watch?v=D5_FHbdsjRc&list=PLmexTtcbIn_gP8bpsUsHfv-58KsKPsGEo)
