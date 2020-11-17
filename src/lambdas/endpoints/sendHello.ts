@@ -1,19 +1,9 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 
+import Response from '../common/Response';
+
 import 'source-map-support/register';
 
-export async function handler(event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
-  const hello = 'HELLO';
-  console.log(hello);
-  return {
-    statusCode: 200,
-    body: JSON.stringify(
-      {
-        message: 'Go Serverless Webpack (Typescript) v1.0! Your function executed successfully!',
-        input: event,
-      },
-      null,
-      2,
-    ),
-  };
-}
+export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+  return new Response({ statusCode: 200, body: { message: 'Hello!', input: event } });
+};

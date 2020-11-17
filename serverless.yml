@@ -1,10 +1,17 @@
-service:
-  name: 'serverless-test'
+service: 'serverless-test'
 
 app: 'typescript-lambda-dynamodb-app'
 org: 'jimmeex'
 
 frameworkVersion: '2'
+
+provider:
+  name: 'aws'
+  runtime: 'nodejs12.x'
+  region: "${env:AWS_REGION, 'ap-southeast-2'}"
+  stage: "${opt:stage, 'dev'}"
+  environment:
+    tableName: '${self:service}-${self:custom.tableName}-${self:provider.stage}'
 
 plugins:
   - serverless-webpack
@@ -12,7 +19,7 @@ plugins:
   - serverless-dynamodb-local
 
 custom:
-  tableName: 'cool-places-table'
+  tableName: 'cool-places'
   webpack:
     webpackConfig: './webpack.config.js'
     includeModules: true
@@ -28,12 +35,6 @@ custom:
       noStart: '${env:DYNAMODB_NO_START, false}'
       migrate: true
 
-provider:
-  name: 'aws'
-  runtime: 'nodejs12.x'
-  region: "${env:AWS_REGION, 'ap-southeast-2'}"
-  stage: "${opt:stage, 'dev'}"
-
 functions:
   hello:
     handler: 'src/lambdas/endpoints/sendHello.handler'
@@ -45,7 +46,7 @@ functions:
     handler: 'src/lambdas/endpoints/createPlace.handler'
     events:
       - http:
-          path: 'create-place/{id}'
+          path: 'create-place'
           method: 'post'
 
 resources:
@@ -53,11 +54,11 @@ resources:
     CoolPlaces:
       Type: 'AWS::DynamoDB::Table'
       Properties:
-        TableName: 'cool-places' # TableName: '${self:service}:${self:custom.tableName}-${self:provider.stage}'
+        TableName: '${self:service}-${self:custom.tableName}-${self:provider.stage}'
         AttributeDefinitions:
-          - AttributeName: 'ID'
+          - AttributeName: 'id'
             AttributeType: 'S'
         KeySchema:
-          - AttributeName: 'ID'
+          - AttributeName: 'id'
             KeyType: 'HASH'
         BillingMode: 'PAY_PER_REQUEST'
