@@ -29,6 +29,17 @@
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
       "port": 9229
+    },
+    {
+      "name": "Debug Webpack",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceRoot}",
+      "program": "./node_modules/webpack/bin/webpack.js",
+      "args": ["--color"],
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["--inspect"],
+      "console": "integratedTerminal"
     }
   ]
 }

@@ -1,5 +1,4 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
-import 'source-map-support/register';
 
 import Response from '../common/Response';
 import { createItem } from '../common/Dynamo';

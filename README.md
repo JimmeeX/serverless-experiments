@@ -51,6 +51,8 @@ Learning about [serverless](https://www.serverless.com/) :)
    aws dynamodb --endpoint-url http://localhost:8000 delete-table --table-name <dynamodb-table-name>
    ```
 
+   If you are developing locally, make sure to run `sls dynamodb install` after running `npm install`.
+
 ## Debugging
 
 ### Via Docker

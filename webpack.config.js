@@ -5,7 +5,7 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 module.exports = {
   context: __dirname,
-  mode: process.env.NODE_ENV === 'development' ? 'development' : 'production',
+  mode: slsw.lib.webpack.isLocal ? 'development' : 'production',
   entry: slsw.lib.entries,
   devtool: 'source-map',
   resolve: {
@@ -19,7 +19,7 @@ module.exports = {
     filename: '[name].js',
   },
   target: 'node',
-  externals: [nodeExternals()],
+  externals: [nodeExternals({ modulesDir: path.resolve(__dirname, '../../node_modules') })], // Add modulesDir to include required packages when deploying
   module: {
     rules: [
       // all files with a `.ts` or `.tsx` extension will be handled by `ts-loader`

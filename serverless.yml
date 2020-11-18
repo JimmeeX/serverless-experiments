@@ -12,6 +12,28 @@ provider:
   stage: "${opt:stage, 'dev'}"
   environment:
     tableName: '${self:service}-${self:custom.tableName}-${self:provider.stage}'
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:DescribeTable
+        - dynamodb:Scan
+        - dynamodb:PutItem
+        - dynamodb:GetItem
+        - dynamodb:DeleteItem
+        - dynamodb:Query
+        - dynamodb:UpdateItem
+      Resource:
+        - 'Fn::Join':
+            [
+              '',
+              [
+                'arn:aws:dynamodb:',
+                { 'Ref': 'AWS::Region' },
+                ':',
+                { 'Ref': 'AWS::AccountId' },
+                ':table/${self:service}-${self:custom.tableName}*',
+              ],
+            ]
 
 plugins:
   - serverless-webpack
@@ -23,17 +45,22 @@ custom:
   webpack:
     webpackConfig: './webpack.config.js'
     includeModules: true
+
   serverless-offline:
     host: '0.0.0.0'
     httpPort: 5000
+
   dynamodb:
     stages:
       - dev
     start:
       port: '${env:DYNAMODB_PORT, 8000}'
-      host: '${env:DYNAMODB_HOST, localhost}'
+      host: "${env:DYNAMODB_HOST, 'localhost'}"
       noStart: '${env:DYNAMODB_NO_START, false}'
       migrate: true
+
+package:
+  individually: true
 
 functions:
   hello:
